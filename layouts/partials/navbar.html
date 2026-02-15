@@ -1,0 +1,11 @@
+{{ $prefix := "" }}
+{{ if not .IsHome }}{{ $prefix = "/" }}{{ end }}
+
+<nav id="top-nav">
+    <div class="nav-links">
+        <a href="{{ $prefix }}#site-head">Home</a>
+        <a href="{{ $prefix }}#reel">Showreel</a>
+        <a href="{{ $prefix }}#projects">Projects</a>
+        <a href="{{ $prefix }}#contact">Contact</a>
+    </div>
+</nav>

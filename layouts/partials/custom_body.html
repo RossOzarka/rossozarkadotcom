@@ -1,0 +1,99 @@
+{{ $prefix := "" }}
+{{ if not .IsHome }}{{ $prefix = "/" }}{{ end }}
+
+<nav id="top-nav">
+<!-->    <div class="language-toggle">
+        <a href="/" class="lang-link">EN</a>
+        <a href="/fr/" class="lang-link">FR</a>
+    </div>
+-->
+    <div class="nav-links" id="nav-links">
+        <a href="{{ $prefix }}#site-head">Home</a>
+        <a href="{{ $prefix }}#reel">Showreel</a>
+        <a href="{{ $prefix }}#projects">Projects</a>
+        <a href="{{ $prefix }}#contact">Contact</a>
+    </div>
+    <div class="social-links">
+        <a href="https://youtube.com/@Sealami-Cardboard-Movies" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://instagram.com/sealami_animation" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://vimeo.com/rossozarka" target="_blank" title="Vimeo"><i class="fa-brands fa-vimeo"></i></a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</nav>
+
+<style>
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: absolute;
+    right: 2rem;
+}
+
+.hamburger span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .social-links {
+        display: none !important;
+    }
+
+    .language-toggle {
+        position: static;
+    }
+
+    #nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 2rem;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    #nav-links.open {
+        display: flex;
+    }
+
+    #top-nav {
+        flex-wrap: wrap;
+    }
+}
+</style>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('nav-links');
+
+hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+});
+
+// Close menu when a link is clicked
+navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+    });
+});
+</script>

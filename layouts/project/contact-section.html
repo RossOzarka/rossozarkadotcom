@@ -1,0 +1,12 @@
+<section class="contact-section full-width-section">
+    <div class="contact-container">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-content">
+            {{ with .Site.GetPage "/en/homepage/contact.md" }}
+                {{ .Content }}
+            {{ else }}
+                <p>Get in touch: ross.ozarka@gmail.com</p>
+            {{ end }}
+        </div>
+    </div>
+</section>

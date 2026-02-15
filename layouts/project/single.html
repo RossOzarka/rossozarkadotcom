@@ -1,0 +1,294 @@
+{{ define "main" }}
+<!-- Single Project Page -->
+<article class="project-single">
+    
+    <!-- 1. VIDEO EMBED SECTION -->
+    <section class="project-video-section">
+        <div class="video-container">
+            {{ if .Params.video }}
+                {{ if strings.HasSuffix .Params.video ".mp4" }}
+                <!-- Local MP4 video -->
+                <video controls autoplay muted loop>
+                    <source src="{{ .Params.video }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                {{ else if strings.HasPrefix .Params.video "https://www.youtube.com" }}
+                <!-- YouTube embed -->
+                <iframe src="{{ .Params.video | replaceRE "watch\\?v=" "embed/" }}" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+                {{ else if strings.HasPrefix .Params.video "https://vimeo.com" }}
+                <!-- Vimeo embed -->
+                <iframe src="{{ .Params.video | replaceRE "vimeo.com/" "player.vimeo.com/video/" }}" 
+                        frameborder="0" 
+                        allow="autoplay; fullscreen; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+                {{ end }}
+            {{ else }}
+            <!-- Fallback image if no video -->
+            <img src="/images/projects/{{ .Params.featured_image }}" alt="{{ .Title }}">
+            {{ end }}
+        </div>
+    </section>
+
+    <!-- 2. TEXT SECTION - FULL WIDTH -->
+    <section class="project-text-section full-width-section">
+        <div class="project-text-container">
+            <h2 class="project-section-header">{{ .Params.section_header | default "About This Project" }}</h2>
+            <div class="project-description">
+                {{ .Content }}
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. PROJECTS SECTION - FULL WIDTH -->
+<section class="projects-section full-width-section">
+        <h2 class="section-title">Projects</h2>
+        {{ partial "projects-section.html" . }}
+</section>
+
+    <!-- 4. CONTACT SECTION - FULL WIDTH -->
+{{ partial "contact-section.html" . }}
+
+</article>
+
+<style>
+/* Project Page Specific Styles */
+.project-single {
+    width: 100%;
+    margin: 0 auto;
+    background-color: var(--primary-black);
+}
+
+body {
+    background-color: var(--primary-black);
+}
+
+/* Video Section - stays constrained */
+.project-video-section {
+    max-width: 1200px;
+    margin: 8rem auto 4rem auto;
+    padding-top: 2rem;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    background: var(--primary-black, #000);
+}
+
+.video-container video,
+.video-container iframe,
+.video-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Text Section - FULL WIDTH */
+.project-text-section {
+    background-color: var(--bg-about, #79C9C5);
+    padding: 4rem 0;
+    margin: 4rem 0;
+}
+
+.project-text-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.project-section-header {
+    font-family: 'PixelWarden', sans-serif;
+    font-size: 6rem;
+    font-weight: 700;
+    color: var(--text-light, white);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.project-description {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--text-light, white);
+}
+
+.project-description p {
+    margin-bottom: 1.5rem;
+}
+
+/* Projects Section - FULL WIDTH */
+.projects-section {
+    background-color: var(--bg-projects, transparent);
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.projects-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0rem;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Projects intro text */
+.projects-intro {
+    max-width: 800px;
+    margin: 0 auto 3rem auto;
+    text-align: center;
+    font-family: 'PixelWarden', sans-serif;
+    font-size: 2rem;
+    color: var(--text-dark, #333);
+}
+
+.projects-intro p {
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    font-family: 'PixelWarden', sans-serif;
+    font-size: 7rem;
+    font-weight: 700;
+    color: var(--primary-teal, #79C9C5);
+    text-align: center;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+}
+
+/* Contact Section - FULL WIDTH */
+.contact-section {
+    background-color: var(--bg-dark-section);
+    padding: 4rem 0;
+    margin: 4rem 0;
+}
+
+.contact-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.contact-content {
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 3rem;
+    color: var(--text-light);
+}
+
+.contact-section .section-title {
+    color: var(--text-light);
+}
+
+
+/* Full width utility class */
+.full-width-section {
+    width: 100vw !important;
+    position: relative !important;
+    left: 50% !important;
+    right: 50% !important;
+    margin-left: -50vw !important;
+    margin-right: -50vw !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Ensure nested content respects max-width */
+.full-width-section > *:not(.project-text-container):not(.projects-grid) {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Override for specific containers */
+.project-text-container,
+.projects-container,
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Project items */
+.project-item {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.project-item a {
+    display: block;
+    position: relative;
+    text-decoration: none;
+}
+
+.project-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.project-item img:hover {
+    transform: scale(1.025);
+}
+
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--overlay-teal, rgba(121, 201, 197, 0.5));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-item:hover .project-overlay {
+    opacity: 1;
+}
+
+.project-title {
+    color: var(--text-light, white);
+    font-size: 5rem;
+    font-family: 'PixelWarden', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 1rem;
+    line-height: 1.2;
+}
+
+.no-projects {
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    color: var(--text-dark, #333);
+    grid-column: 1 / -1;
+    padding: 4rem;
+}
+</style>
+
+{{ end }}

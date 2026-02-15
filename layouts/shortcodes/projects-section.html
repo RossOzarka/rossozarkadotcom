@@ -1,0 +1,14 @@
+<div class="projects-grid">
+    {{ $allProjects := where .Page.Site.RegularPages "Section" "projects" }}
+    {{ range $allProjects }}
+    <div class="project-item">
+        <a href="{{ .RelPermalink }}">
+            {{ $featuredImage := .Params.featured_image | default (printf "%s.jpg" .File.BaseFileName) }}
+            <img src="/images/projects/{{ $featuredImage }}" alt="{{ .Title }}">
+            <div class="project-overlay">
+                <div class="project-title">{{ .Title }}</div>
+            </div>
+        </a>
+    </div>
+    {{ end }}
+</div>
